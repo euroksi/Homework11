@@ -1,6 +1,8 @@
 package org.example;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 class Name {
     public static void main(String[] args) {
@@ -10,15 +12,9 @@ class Name {
     }
 
     public static String formatNamesWithOddIndices(List<String> names) {
-        StringBuilder result = new StringBuilder();
-
-        for (int i = 1; i < names.size(); i += 2) {
-            if (result.length() > 0) {
-                result.append(", ");
-            }
-            result.append(i).append(". ").append(names.get(i));
-        }
-
-        return result.toString();
+        return IntStream.range(0, names.size())
+                .filter(i -> i % 2 == 1)
+                .mapToObj(i -> (i + 1) + ". " + names.get(i))
+                .collect(Collectors.joining(", "));
     }
 }
